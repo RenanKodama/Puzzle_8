@@ -35,17 +35,6 @@ public class AStarHeuristic implements Heuristic {
                 }
                 break;
 
-            case ("E"):
-            case ("e"):
-                /*Distancia Euclidiana*/
-                for (int i = 0; i < tam; i++) {
-                    posicaoAtual = tabAtual.getPosicaoTab(i);
-                    destino = goalState.getPosicaoTab(i);
-                    distancia = (int) Math.sqrt((Math.pow(posicaoAtual[0] - destino[0], 2) + Math.pow(posicaoAtual[1] - destino[1], 2)));
-                    distanciaTotal += distancia;
-                }
-                break;
-
             case ("C"):
             case ("c"):
                 /*Distancia de Camberra*/
@@ -59,7 +48,7 @@ public class AStarHeuristic implements Heuristic {
 
             default:
                 /*ERRO*/
-                System.out.println("Operação Inválida, deve ser |M-m|E-e|C-c|");
+                System.out.println("ERRO!");
                 break;
 
         }

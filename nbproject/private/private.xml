@@ -3,13 +3,13 @@
     <editor-bookmarks xmlns="http://www.netbeans.org/ns/editor-bookmarks/2" lastBookmarkId="0"/>
     <open-files xmlns="http://www.netbeans.org/ns/projectui-open-files/2">
         <group>
-            <file>file:/home/renan/NetBeansProjects/Puzzle_8/src/Puzzle_8/Solucao.java</file>
-            <file>file:/home/renan/NetBeansProjects/Puzzle_8/src/Puzzle_8/AStarSearch.java</file>
-            <file>file:/home/renan/NetBeansProjects/Puzzle_8/src/Puzzle_8/Node.java</file>
-            <file>file:/home/renan/NetBeansProjects/Puzzle_8/src/Puzzle_8/Tabuleiro.java</file>
-            <file>file:/home/renan/NetBeansProjects/Puzzle_8/src/Puzzle_8/AStarHeuristic.java</file>
-            <file>file:/home/renan/NetBeansProjects/Puzzle_8/src/Puzzle_8/Heuristic.java</file>
-            <file>file:/home/renan/NetBeansProjects/Puzzle_8/src/Puzzle_8/Principal.java</file>
+            <file>file:/home/renan/GitHub/Puzzle_8/src/Puzzle_8/Tabuleiro.java</file>
+            <file>file:/home/renan/GitHub/Puzzle_8/src/Puzzle_8/Heuristic.java</file>
+            <file>file:/home/renan/GitHub/Puzzle_8/src/Puzzle_8/AStarSearch.java</file>
+            <file>file:/home/renan/GitHub/Puzzle_8/src/Puzzle_8/Solucao.java</file>
+            <file>file:/home/renan/GitHub/Puzzle_8/src/Puzzle_8/AStarHeuristic.java</file>
+            <file>file:/home/renan/GitHub/Puzzle_8/src/Puzzle_8/Node.java</file>
+            <file>file:/home/renan/GitHub/Puzzle_8/src/Puzzle_8/Principal.java</file>
         </group>
     </open-files>
 </project-private>
