@@ -15,7 +15,8 @@ public class Principal {
 
         String arquivo_entrada;
         String arquivo_saida;
-
+        
+        System.out.println("Opt: teste1.txt,teste2.txt,teste3.txt");
         System.out.println("Arquivo de Entrada: ");
         arquivo_entrada = ler.nextLine();
 
