@@ -6,27 +6,27 @@ public class Node {
 
     private Tabuleiro tab;
 
-    private Heuristic heuristica;
+    private Heuristic heuri;
 
-    private ArrayList<Node> filho = new ArrayList<Node>();
+    private ArrayList<Node> child = new ArrayList<Node>();
 
-    private Node pai;
+    private Node father;
 
     public Node(Tabuleiro tab, Heuristic h) {
         this.tab = tab;
-        this.heuristica = h;
+        this.heuri = h;
     }
 
-    public ArrayList<Node> createFilho() throws InstantiationException, IllegalAccessException {
-        Node pn;
-        Tabuleiro pg;
+    public ArrayList<Node> createChild() throws InstantiationException, IllegalAccessException {
+        Node aux1;
+        Tabuleiro aux2;
 
-        pg = new Tabuleiro(tab);
-        if (pg.moveEspaco(0, -1)) {
+        aux2 = new Tabuleiro(tab);
+        if (aux2.moveEspaco(0, -1)) {
             try {
-                pn = new Node(pg, heuristica.getClass().newInstance());
-                pn.setPai(this);
-                filho.add(pn);
+                aux1 = new Node(aux2, heuri.getClass().newInstance());
+                aux1.setFather(this);
+                child.add(aux1);
             } catch (InstantiationException e) {
                 e.printStackTrace();
             } catch (IllegalAccessException e) {
@@ -34,41 +34,42 @@ public class Node {
             }
         }
 
-        pg = new Tabuleiro(tab);
-        if (pg.moveEspaco(-1, 0)) {
-            pn = new Node(pg, heuristica.getClass().newInstance());
-            pn.setPai(this);
-            filho.add(pn);
+        aux2 = new Tabuleiro(tab);
+        if (aux2.moveEspaco(-1, 0)) {
+            aux1 = new Node(aux2, heuri.getClass().newInstance());
+            aux1.setFather(this);
+            child.add(aux1);
         }
 
-        pg = new Tabuleiro(tab);
-        if (pg.moveEspaco(1, 0)) {
-            pn = new Node(pg, heuristica.getClass().newInstance());
-            pn.setPai(this);
-            filho.add(pn);
+        aux2 = new Tabuleiro(tab);
+        if (aux2.moveEspaco(1, 0)) {
+            aux1 = new Node(aux2, heuri.getClass().newInstance());
+            aux1.setFather(this);
+            child.add(aux1);
         }
 
-        pg = new Tabuleiro(tab);
-        if (pg.moveEspaco(0, 1)) {
-            pn = new Node(pg, heuristica.getClass().newInstance());
-            pn.setPai(this);
-            filho.add(pn);
+        aux2 = new Tabuleiro(tab);
+        if (aux2.moveEspaco(0, 1)) {
+            aux1 = new Node(aux2, heuri.getClass().newInstance());
+            aux1.setFather(this);
+            child.add(aux1);
         }
 
-        return filho;
+        return child;
     }
 
-    public void determineHeuristica(Tabuleiro goalState, String operacao) {
-        if (heuristica != null) {
-            heuristica.calculoHeuristica(this, goalState, operacao);
-        }
-    }
 
     public float getValorHeuristica() {
-        if (heuristica != null) {
-            return heuristica.getValorHeuristica();
+        if (heuri != null) {
+            return heuri.getValorHeuristica();
         } else {
             return 9999.f;
+        }
+    }
+    
+    public void determineHeuristica(Tabuleiro goalState, String operation) {
+        if (heuri != null) {
+            heuri.calculoHeuristica(this, goalState, operation);
         }
     }
 
@@ -76,16 +77,16 @@ public class Node {
         return tab.equalTo(pn.getTab());
     }
 
-    public ArrayList<Node> getFilho() {
-        return filho;
+    public ArrayList<Node> getChild() {
+        return child;
     }
 
-    public void setPai(Node pn) {
-        this.pai = pn;
+    public void setFather(Node pn) {
+        this.father = pn;
     }
 
-    public Node getPai() {
-        return pai;
+    public Node getFather() {
+        return father;
     }
 
     public Tabuleiro getTab() {

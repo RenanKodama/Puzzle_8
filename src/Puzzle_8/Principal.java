@@ -6,37 +6,37 @@ import java.util.Scanner;
 public class Principal {
 
     private Solucao search;
-    private static Scanner ler;
-    public static String operacao;
+    private static Scanner read;
+    public static String operation;
 
     public static void main(String[] args) {
-        Principal solucao = new Principal();
-        ler = new Scanner(System.in);
+        Principal solution = new Principal();
+        read = new Scanner(System.in);
 
-        String arquivo_entrada;
-        String arquivo_saida;
+        String file_input;
+        String file_output;
         
         System.out.println("Opt: teste1.txt,teste2.txt,teste3.txt");
         System.out.println("Arquivo de Entrada: ");
-        arquivo_entrada = ler.nextLine();
+        file_input = read.nextLine();
 
-        arquivo_saida = "objetivo.txt";
+        file_output = "objetivo.txt";
 
         boolean op = true;
         while (op) {
             System.out.println("ManHattan[M-m]|Camberra[C-c]");
-            operacao = ler.nextLine();
+            operation = read.nextLine();
         
-            switch (operacao) {
+            switch (operation) {
                 case "M":
                 case "m":
-                    operacao = "m";
+                    operation = "m";
                     op = false;
                     break;
 
                 case "C":
                 case "c":
-                    operacao = "m";
+                    operation = "m";
                     op = false;
                     break;
 
@@ -46,42 +46,42 @@ public class Principal {
 
             }
         }
-        solucao.Start(arquivo_entrada, arquivo_saida);
+        solution.Start(file_input, file_output);
     }
 
     public Principal() {
     }
 
-    public void Start(String nomeArquivoInicio, String nomeArquivoObjetivo) {
-        ArrayList<Tabuleiro> resposta = new ArrayList<Tabuleiro>();
+    public void Start(String fileNameInitial, String fileNameGoal) {
+        ArrayList<Tabuleiro> response = new ArrayList<Tabuleiro>();
 
-        Tabuleiro inicioTab = new Tabuleiro(nomeArquivoInicio);
+        Tabuleiro initTab = new Tabuleiro(fileNameInitial);
 
-        Tabuleiro objetivoTab = new Tabuleiro(nomeArquivoObjetivo);
+        Tabuleiro goalTab = new Tabuleiro(fileNameGoal);
 
         System.out.println("Configuração Inicial");
-        inicioTab.printTab();
+        initTab.printTab();
 
         System.out.println("Configuração Final");
-        objetivoTab.printTab();
+        goalTab.printTab();
 
         search = new AStarSearch();
 
         if (search != null) {
-            resposta = search.encontrarSolucao(inicioTab, objetivoTab, operacao);
+            response = search.encontrarSolucao(initTab, goalTab, operation);
 
-            if (resposta != null) {
+            if (response != null) {
                 System.out.println("Caminho Tomado");
-                for (int i = 0; i < resposta.size(); i++) {
-                    resposta.get(i).printTab();
+                for (int i = 0; i < response.size(); i++) {
+                    response.get(i).printTab();
                 }
             } else {
                 System.out.println("Sem solução!");
             }
 
             search.printDados();
-            System.out.println("     Inicio: " + nomeArquivoInicio);
-            System.out.println("       Final: " + nomeArquivoObjetivo);
+            System.out.println("     Inicio: " + fileNameInitial);
+            System.out.println("       Final: " + fileNameGoal);
         }
     }
 

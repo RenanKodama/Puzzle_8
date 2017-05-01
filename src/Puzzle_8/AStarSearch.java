@@ -7,9 +7,9 @@ import java.util.logging.Logger;
 
 public class AStarSearch implements Solucao {
 
-    private ArrayList<Node> statusVisitado = new ArrayList<Node>();
+    private ArrayList<Node> visited = new ArrayList<Node>();
     private LinkedList<Node> openStates = new LinkedList<Node>();
-    private ArrayList<Tabuleiro> solucao = new ArrayList<Tabuleiro>();
+    private ArrayList<Tabuleiro> solution = new ArrayList<Tabuleiro>();
     private long runTime = 0;
     private long startTime, endTime;
 
@@ -17,12 +17,12 @@ public class AStarSearch implements Solucao {
     }
 
     public ArrayList<Tabuleiro> encontrarSolucao(Tabuleiro startState, Tabuleiro goalState, String operacao) {
-        ArrayList<Node> filho = new ArrayList<Node>();
+        ArrayList<Node> child = new ArrayList<Node>();
 
-        solucao = new ArrayList<Tabuleiro>();
+        solution = new ArrayList<Tabuleiro>();
         Node currentState = null;
 
-        boolean solucaoEncontrada = false, posicaoVisitada = false;
+        boolean solutionFound = false, visitedPosition = false;
         int nodeCounter = 0;
 
         openStates.offer(new Node(startState, new AStarHeuristic()));
@@ -31,7 +31,7 @@ public class AStarSearch implements Solucao {
 
         System.out.println("Caminhos Possíveis");
 
-        while (!openStates.isEmpty() && solucaoEncontrada == false) {
+        while (!openStates.isEmpty() && solutionFound == false) {
             currentState = openStates.poll();
             nodeCounter++;
 
@@ -39,75 +39,75 @@ public class AStarSearch implements Solucao {
             currentState.getTab().printTab();
 
             if (currentState.getTab().equalTo(goalState)) {
-                solucaoEncontrada = true;
+                solutionFound = true;
                 break;
             }
 
             try {
-                filho = currentState.createFilho();
+                child = currentState.createChild();
             } catch (InstantiationException ex) {
                 Logger.getLogger(AStarSearch.class.getName()).log(Level.SEVERE, null, ex);
             } catch (IllegalAccessException ex) {
                 Logger.getLogger(AStarSearch.class.getName()).log(Level.SEVERE, null, ex);
             }
 
-            for (int i = 0; i < filho.size(); i++) {
-                Node newFilho = filho.get(i);
-                posicaoVisitada = false;
+            for (int i = 0; i < child.size(); i++) {
+                Node newChild = child.get(i);
+                visitedPosition = false;
 
-                for (Node newNode : statusVisitado) {
-                    if (newFilho.equalTo(newNode)) {
+                for (Node newNode : visited) {
+                    if (newChild.equalTo(newNode)) {
                         System.out.println("\t Closed \n");
-                        posicaoVisitada = true;
+                        visitedPosition = true;
                         break;
                     }
                 }
 
                 for (Node newNode : openStates) {
-                    if (newFilho.equalTo(newNode)) {
+                    if (newChild.equalTo(newNode)) {
                         System.out.println("\t Opened \n");
-                        posicaoVisitada = true;
+                        visitedPosition = true;
                         break;
                     }
                 }
 
-                if (posicaoVisitada != true) {
+                if (visitedPosition != true) {
                     boolean inserted = false;
 
-                    newFilho.determineHeuristica(goalState, operacao);
+                    newChild.determineHeuristica(goalState, operacao);
 
                     for (int j = 0; j < openStates.size(); j++) {
-                        if (newFilho.getValorHeuristica() < openStates.get(j).getValorHeuristica()) {
-                            openStates.add(j, newFilho);
+                        if (newChild.getValorHeuristica() < openStates.get(j).getValorHeuristica()) {
+                            openStates.add(j, newChild);
                             inserted = true;
                             break;
                         }
                     }
 
                     if (inserted == false) {
-                        openStates.offer(newFilho);
+                        openStates.offer(newChild);
                     }
 
-                    System.out.println("\tcustoFilho = " + newFilho.getValorHeuristica());
-                    newFilho.getTab().printTabFilho();
+                    System.out.println("\tcustoFilho = " + newChild.getValorHeuristica());
+                    newChild.getTab().printTabChild();
 
                 }
             }
 
-            statusVisitado.add(currentState);
+            visited.add(currentState);
             openStates.remove(currentState);
         }
 
         endTime = System.nanoTime();
         runTime = (endTime - startTime) / 1000000;
 
-        if (solucaoEncontrada == true) {
+        if (solutionFound == true) {
             boolean caminhoEncontrado = false;
 
-            solucao.add(currentState.getTab());
+            solution.add(currentState.getTab());
             while (caminhoEncontrado == false) {
-                currentState = currentState.getPai();
-                solucao.add(0, currentState.getTab());
+                currentState = currentState.getFather();
+                solution.add(0, currentState.getTab());
                 if (currentState.getTab().equalTo(startState)) {
                     caminhoEncontrado = true;
                 }
@@ -116,14 +116,14 @@ public class AStarSearch implements Solucao {
             return null;
         }
 
-        return solucao;
+        return solution;
     }
 
     public void printDados() {
         System.out.println(" Análise");
         System.out.println(" Tempo: " + runTime + " ms");
-        System.out.println(" Nodes Searched: " + statusVisitado.size());
-        System.out.println(" Solution Length: " + solucao.size());
+        System.out.println(" Nodes Searched: " + visited.size());
+        System.out.println(" Solution Length: " + solution.size());
         System.out.println(" ======================= ");
     }
 

@@ -7,31 +7,31 @@ public class AStarHeuristic implements Heuristic {
     public AStarHeuristic() {
     }
 
-    public void calculoHeuristica(Node currentState, Tabuleiro goalState, String operacao) {
-        Tabuleiro tabAtual = currentState.getTab();
-        int tam = goalState.getLargura() * goalState.getAltura();
-        int[] posicaoAtual = new int[2];
-        int[] destino = new int[2];
-        int distancia;
-        int distanciaTotal = 0;
+    public void calculoHeuristica(Node currentState, Tabuleiro goalState, String operation) {
+        Tabuleiro currentTab = currentState.getTab();
+        int tam = goalState.getWidth() * goalState.getHeight();
+        int[] currentPosition = new int[2];
+        int[] destiny = new int[2];
+        int dist;
+        int distTotal = 0;
 
         for (int i = 0; i < tam; i++) {
-            posicaoAtual = tabAtual.getPosicaoTab(i);
-            destino = goalState.getPosicaoTab(i);
-            distancia = Math.abs(posicaoAtual[0] - destino[0])
-                    + Math.abs(posicaoAtual[1] - destino[1]);
-            distanciaTotal += distancia;
+            currentPosition = currentTab.getPositionTab(i);
+            destiny = goalState.getPositionTab(i);
+            dist = Math.abs(currentPosition[0] - destiny[0])
+                    + Math.abs(currentPosition[1] - destiny[1]);
+            distTotal += dist;
         }
 
-        switch (operacao) {
+        switch (operation) {
             case ("M"):
             case ("m"):
                 /*Distancia de Manhattan*/
                 for (int i = 0; i < tam; i++) {
-                    posicaoAtual = tabAtual.getPosicaoTab(i);
-                    destino = goalState.getPosicaoTab(i);
-                    distancia = Math.abs(posicaoAtual[0] - destino[0]) + Math.abs(posicaoAtual[1] - destino[1]);
-                    distanciaTotal += distancia;
+                    currentPosition = currentTab.getPositionTab(i);
+                    destiny = goalState.getPositionTab(i);
+                    dist = Math.abs(currentPosition[0] - destiny[0]) + Math.abs(currentPosition[1] - destiny[1]);
+                    distTotal += dist;
                 }
                 break;
 
@@ -39,10 +39,10 @@ public class AStarHeuristic implements Heuristic {
             case ("c"):
                 /*Distancia de Camberra*/
                 for (int i = 0; i < tam; i++) {
-                    posicaoAtual = tabAtual.getPosicaoTab(i);
-                    destino = goalState.getPosicaoTab(i);
-                    distancia = Math.abs(posicaoAtual[0] - destino[0]) / (Math.abs(posicaoAtual[1]) + Math.abs(destino[1]) + 1);
-                    distanciaTotal += distancia;
+                    currentPosition = currentTab.getPositionTab(i);
+                    destiny = goalState.getPositionTab(i);
+                    dist = Math.abs(currentPosition[0] - destiny[0]) / (Math.abs(currentPosition[1]) + Math.abs(destiny[1]) + 1);
+                    distTotal += dist;
                 }
                 break;
 
@@ -57,11 +57,11 @@ public class AStarHeuristic implements Heuristic {
         Node pai = currentState;
 
         while (pai != null) {
-            pai = pai.getPai();
+            pai = pai.getFather();
             custoTotal++;
         }
 
-        heuristic = distanciaTotal + custoTotal;
+        heuristic = distTotal + custoTotal;
     }
 
     public float getValorHeuristica() {
